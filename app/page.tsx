@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Shield, TrendingUp, AlertTriangle, Clock, Eye, Copy, Check, Activity, Globe, PieChart, Server, ChevronRight, Search } from 'lucide-react';
+import { Shield, TrendingUp, AlertTriangle, Clock, Eye, Copy, Check, Activity, Globe, PieChart, Server, ChevronRight, Search, Database } from 'lucide-react';
 import Link from 'next/link';
 import { LineChart, Line, AreaChart, Area, PieChart as RePieChart, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -43,7 +43,6 @@ export default function Home() {
     setTimeout(() => setCopied(null), 2000);
   };
 
-  // Chart data
   const threatActivityData = [
     { time: '4 AM', threats: 120, active: 85 },
     { time: '8 AM', threats: 280, active: 190 },
@@ -147,7 +146,6 @@ export default function Home() {
 
         {/* Threat Activity Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-          {/* Chart */}
           <div className="lg:col-span-2 bg-[#12121a] rounded-xl p-6 border border-[#1a1a2e]">
             <div className="flex items-center justify-between mb-4">
               <div>
@@ -155,7 +153,7 @@ export default function Home() {
                 <p className="text-xs text-gray-500 mt-1">Last 24 Hours</p>
               </div>
               <button className="text-blue-500 text-sm hover:text-blue-400 transition flex items-center gap-1">
-                View full report <ChevronRight className="w-3 h-3" />
+                View full report
               </button>
             </div>
             <ResponsiveContainer width="100%" height={250}>
@@ -165,31 +163,15 @@ export default function Home() {
                     <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
                     <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
                   </linearGradient>
-                  <linearGradient id="colorActive" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
-                  </linearGradient>
                 </defs>
                 <XAxis dataKey="time" stroke="#4a4a5a" fontSize={12} />
                 <YAxis stroke="#4a4a5a" fontSize={12} />
                 <Tooltip contentStyle={{ backgroundColor: '#1a1a2e', border: '1px solid #2d2d44', borderRadius: '8px' }} />
-                <Area type="monotone" dataKey="threats" stroke="#3b82f6" fill="url(#colorThreats)" strokeWidth={2} name="Total Threats" />
-                <Area type="monotone" dataKey="active" stroke="#ef4444" fill="url(#colorActive)" strokeWidth={2} name="Active Threats" />
+                <Area type="monotone" dataKey="threats" stroke="#3b82f6" fill="url(#colorThreats)" strokeWidth={2} />
               </AreaChart>
             </ResponsiveContainer>
-            <div className="flex justify-center gap-6 mt-4 text-xs">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                <span className="text-gray-400">Total Threats</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                <span className="text-gray-400">Active Threats</span>
-              </div>
-            </div>
           </div>
 
-          {/* Risk Distribution */}
           <div className="bg-[#12121a] rounded-xl p-6 border border-[#1a1a2e]">
             <h3 className="text-white font-semibold mb-2">Risk Distribution</h3>
             <p className="text-xs text-gray-500 mb-4">By severity level</p>
@@ -228,32 +210,11 @@ export default function Home() {
             <code className="text-xs text-gray-400 bg-[#0a0a0f] px-2 py-1 rounded">8.8.8.8</code>
             <code className="text-xs text-gray-400 bg-[#0a0a0f] px-2 py-1 rounded">malware-domain.com</code>
             <code className="text-xs text-gray-400 bg-[#0a0a0f] px-2 py-1 rounded">d41d8cd98f00b204e9800998ecf8427e</code>
-            <code className="text-xs text-gray-400 bg-[#0a0a0f] px-2 py-1 rounded">185.130.5.253</code>
           </div>
         </div>
 
-        {/* Two Column Section */}
+        {/* Top Indicators */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* Global Threat Map Placeholder */}
-          <div className="bg-[#12121a] rounded-xl p-6 border border-[#1a1a2e]">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h3 className="text-white font-semibold">Global Threat Map</h3>
-                <p className="text-xs text-gray-500 mt-1">Live threat detections around the world</p>
-              </div>
-              <button className="text-blue-500 text-sm hover:text-blue-400 transition flex items-center gap-1">
-                View full map <ChevronRight className="w-3 h-3" />
-              </button>
-            </div>
-            <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 rounded-lg h-48 flex items-center justify-center border border-[#1a1a2e]">
-              <div className="text-center">
-                <Globe className="w-12 h-12 text-gray-600 mx-auto mb-2" />
-                <p className="text-sm text-gray-500">Interactive threat map coming soon</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Top Indicators */}
           <div className="bg-[#12121a] rounded-xl p-6 border border-[#1a1a2e]">
             <div className="flex items-center gap-2 mb-4">
               <PieChart className="w-5 h-5 text-blue-500" />
@@ -262,15 +223,7 @@ export default function Home() {
             <p className="text-xs text-gray-500 mb-4">Distribution of detected indicators</p>
             <ResponsiveContainer width="100%" height={180}>
               <RePieChart>
-                <Pie
-                  data={indicatorData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={50}
-                  outerRadius={70}
-                  paddingAngle={2}
-                  dataKey="value"
-                >
+                <Pie data={indicatorData} cx="50%" cy="50%" innerRadius={50} outerRadius={70} paddingAngle={2} dataKey="value">
                   {indicatorData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
@@ -285,12 +238,28 @@ export default function Home() {
                     <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
                     <span className="text-gray-400">{item.name}</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-white font-medium">{item.percentage}%</span>
-                    <span className="text-gray-500 text-xs">{item.value.toLocaleString()}</span>
-                  </div>
+                  <span className="text-white font-medium">{item.percentage}%</span>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Global Threat Map Placeholder */}
+          <div className="bg-[#12121a] rounded-xl p-6 border border-[#1a1a2e]">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-white font-semibold">Global Threat Map</h3>
+                <p className="text-xs text-gray-500 mt-1">Live threat detections around the world</p>
+              </div>
+              <button className="text-blue-500 text-sm hover:text-blue-400 transition">
+                View full map
+              </button>
+            </div>
+            <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 rounded-lg h-48 flex items-center justify-center border border-[#1a1a2e]">
+              <div className="text-center">
+                <Globe className="w-12 h-12 text-gray-600 mx-auto mb-2" />
+                <p className="text-sm text-gray-500">Interactive threat map</p>
+              </div>
             </div>
           </div>
         </div>
@@ -324,37 +293,25 @@ export default function Home() {
                         <div className="flex items-center gap-2">
                           <span className="text-sm">{getTypeIcon(threat.type)}</span>
                           <span className="font-mono text-sm text-white">{threat.indicator}</span>
-                          <button
-                            onClick={() => copyToClipboard(threat.indicator)}
-                            className="hover:bg-[#1a1a2e] p-1 rounded transition"
-                          >
-                            {copied === threat.indicator ? (
-                              <Check className="w-3 h-3 text-green-500" />
-                            ) : (
-                              <Copy className="w-3 h-3 text-gray-500" />
-                            )}
+                          <button onClick={() => copyToClipboard(threat.indicator)} className="hover:bg-[#1a1a2e] p-1 rounded transition">
+                            {copied === threat.indicator ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3 text-gray-500" />}
                           </button>
                         </div>
                         </td>
-                      <td className="px-6 py-3">
-                        <span className="text-xs text-gray-400">{threat.type.toUpperCase()}</span>
-                        </td>
+                      <td className="px-6 py-3"><span className="text-xs text-gray-400">{threat.type.toUpperCase()}</span></td>
                       <td className="px-6 py-3">
                         <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getRiskBadge(threat.riskLevel, threat.riskScore)}`}>
                           {threat.riskLevel.toUpperCase()} {Math.round(threat.riskScore)}%
                         </span>
-                        </td>
+                      </td>
                       <td className="px-6 py-3 text-sm text-gray-400">{threat.reports.toLocaleString()}</td>
                       <td className="px-6 py-3 text-sm text-gray-500">{new Date(threat.lastSeen).toLocaleString()}</td>
                       <td className="px-6 py-3">
-                        <Link
-                          href={`/lookup/${encodeURIComponent(threat.indicator)}?type=${threat.type}`}
-                          className="text-blue-500 hover:text-blue-400 text-sm transition"
-                        >
+                        <Link href={`/lookup/${encodeURIComponent(threat.indicator)}?type=${threat.type}`} className="text-blue-500 hover:text-blue-400 text-sm transition">
                           Details
                         </Link>
-                        </td>
-                     </tr>
+                      </td>
+                    </tr>
                   ))}
                 </tbody>
               </table>
@@ -363,20 +320,8 @@ export default function Home() {
         </div>
 
         {/* Footer */}
-        <div className="mt-8 pt-6 border-t border-[#1a1a2e]">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span>All systems operational</span>
-              </div>
-              <span>Uptime: 99.98%</span>
-            </div>
-            <div className="text-center">
-              <p>ThreatVision AI protects your digital world</p>
-              <p className="text-xs mt-1">© 2026 ThreatVision AI. All rights reserved.</p>
-            </div>
-          </div>
+        <div className="mt-8 pt-6 border-t border-[#1a1a2e] text-center text-sm text-gray-500">
+          <p>© 2026 ThreatVision AI. All rights reserved. | Powered by VirusTotal | AbuseIPDB | IPinfo</p>
         </div>
       </div>
     </div>
