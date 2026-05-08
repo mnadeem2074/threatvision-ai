@@ -3,7 +3,7 @@
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
-import ModernThreatTable from '@/components/ModernThreatTable';
+import ThreatTable from '@/components/ThreatTable';
 
 export default function ThreatsPage() {
   return (
@@ -22,7 +22,7 @@ export default function ThreatsPage() {
             </div>
           </div>
           
-          <ModernThreatTable />
+          <ThreatTable />
         </div>
       </main>
     </div>
