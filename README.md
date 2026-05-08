@@ -61,3 +61,5 @@
 ### Example 3: File Verification**
 
 ### Example 4: Firewall Alert Investigation**
+
+### Example 5: Third-Party Risk Assessment**
