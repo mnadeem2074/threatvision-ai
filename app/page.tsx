@@ -1,9 +1,8 @@
 'use client';
 
+import { Shield, TrendingUp, Globe, Zap, AlertTriangle, Database, ArrowRight, Sparkles } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { Shield, TrendingUp, AlertTriangle, Clock, Eye, Copy, Check, Activity, Globe, PieChart, Server, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { LineChart, Line, AreaChart, Area, PieChart as RePieChart, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface Threat {
   indicator: string;
@@ -17,7 +16,6 @@ interface Threat {
 export default function Home() {
   const [threats, setThreats] = useState<Threat[]>([]);
   const [loading, setLoading] = useState(true);
-  const [copied, setCopied] = useState<string | null>(null);
 
   useEffect(() => {
     fetchThreats();
@@ -37,278 +35,193 @@ export default function Home() {
     }
   };
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(text);
-    setTimeout(() => setCopied(null), 2000);
-  };
-
-  // Chart data
-  const threatActivityData = [
-    { hour: '00:00', threats: 120 },
-    { hour: '04:00', threats: 85 },
-    { hour: '08:00', threats: 280 },
-    { hour: '12:00', threats: 450 },
-    { hour: '16:00', threats: 380 },
-    { hour: '20:00', threats: 210 },
-  ];
-
-  const indicatorData = [
-    { name: 'IP Address', value: 1200000, percentage: 50.0, color: '#3b82f6' },
-    { name: 'Domain', value: 850000, percentage: 35.4, color: '#8b5cf6' },
-    { name: 'Hash', value: 234000, percentage: 9.8, color: '#10b981' },
-    { name: 'URL', value: 116000, percentage: 4.8, color: '#f59e0b' },
-  ];
-
-  const stats = [
-    { label: 'Total Threats', value: '2.4M+', change: '+12.5%', vs: 'vs last 24h', icon: TrendingUp, color: '#3b82f6' },
-    { label: 'Active Threats', value: '1,247', change: '+8.2%', vs: 'vs last 24h', icon: AlertTriangle, color: '#ef4444' },
-    { label: 'Data Sources', value: '5', change: '+2', vs: 'vs yesterday', icon: Shield, color: '#8b5cf6' },
-    { label: 'Response Time', value: '<200ms', change: '-15ms', vs: 'vs yesterday', icon: Clock, color: '#10b981' },
-  ];
-
-  const getRiskBadge = (level: string, score: number) => {
-    const styles = {
-      critical: 'bg-red-500/20 text-red-500 border-red-500/30',
-      high: 'bg-orange-500/20 text-orange-500 border-orange-500/30',
-      medium: 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30',
-      low: 'bg-green-500/20 text-green-500 border-green-500/30',
-    };
-    return styles[level as keyof typeof styles] || styles.low;
-  };
-
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'ip': return '🔴';
-      case 'domain': return '🔵';
-      case 'hash': return '⚠️';
-      default: return '📁';
+  const getRiskColor = (level: string) => {
+    switch (level) {
+      case 'critical': return 'text-red-500 bg-red-500/10';
+      case 'high': return 'text-orange-500 bg-orange-500/10';
+      case 'medium': return 'text-yellow-500 bg-yellow-500/10';
+      default: return 'text-green-500 bg-green-500/10';
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f]">
-      {/* Header */}
-      <header className="border-b border-[#1a1a2e] bg-[#0a0a0f]/95 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                <Shield className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-white">ThreatVision AI</h1>
-                <p className="text-xs text-gray-500">Threat Intelligence Platform</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-[#1a1a2e] rounded-lg">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-xs text-gray-400">All systems operational</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Dashboard Title */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-          <p className="text-gray-500 text-sm mt-1">Real-time threat monitoring and analysis</p>
-        </div>
-
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {stats.map((stat, i) => (
-            <div key={i} className="bg-[#12121a] rounded-xl p-5 border border-[#1a1a2e] hover:border-blue-500/30 transition-all">
-              <div className="flex items-center justify-between mb-3">
-                <stat.icon className="w-5 h-5" style={{ color: stat.color }} />
-                <span className={`text-xs font-medium ${stat.change.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
-                  {stat.change}
-                </span>
-              </div>
-              <div className="text-3xl font-bold text-white">{stat.value}</div>
-              <div className="text-xs text-gray-500 mt-2 flex items-center gap-1">
-                {stat.change} {stat.vs}
-              </div>
-              <div className="text-xs text-gray-600 mt-1">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Two Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-          {/* Threat Activity Chart */}
-          <div className="lg:col-span-2 bg-[#12121a] rounded-xl p-6 border border-[#1a1a2e]">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h3 className="text-white font-semibold">Threat Activity</h3>
-                <p className="text-xs text-gray-500 mt-1">Total threats detected in last 24 hours</p>
-              </div>
-              <button className="text-blue-500 text-sm hover:text-blue-400 transition flex items-center gap-1">
-                View full report <ChevronRight className="w-3 h-3" />
-              </button>
-            </div>
-            <ResponsiveContainer width="100%" height={250}>
-              <AreaChart data={threatActivityData}>
-                <defs>
-                  <linearGradient id="colorThreats" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="hour" stroke="#4a4a5a" fontSize={12} />
-                <YAxis stroke="#4a4a5a" fontSize={12} />
-                <Tooltip contentStyle={{ backgroundColor: '#1a1a2e', border: '1px solid #2d2d44', borderRadius: '8px' }} />
-                <Area type="monotone" dataKey="threats" stroke="#3b82f6" fill="url(#colorThreats)" strokeWidth={2} />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Top Indicators */}
-          <div className="bg-[#12121a] rounded-xl p-6 border border-[#1a1a2e]">
-            <div className="flex items-center gap-2 mb-4">
-              <PieChart className="w-5 h-5 text-blue-500" />
-              <h3 className="text-white font-semibold">Top Indicators by Type</h3>
-            </div>
-            <p className="text-xs text-gray-500 mb-4">Distribution of detected indicators</p>
-            <ResponsiveContainer width="100%" height={180}>
-              <RePieChart>
-                <Pie
-                  data={indicatorData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={50}
-                  outerRadius={70}
-                  paddingAngle={2}
-                  dataKey="value"
-                >
-                  {indicatorData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip contentStyle={{ backgroundColor: '#1a1a2e', border: '1px solid #2d2d44' }} />
-              </RePieChart>
-            </ResponsiveContainer>
-            <div className="space-y-2 mt-4">
-              {indicatorData.map((item, i) => (
-                <div key={i} className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
-                    <span className="text-gray-400">{item.name}</span>
-                  </div>
-                  <span className="text-white font-medium">{item.percentage}%</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Quick Threat Lookup */}
-        <div className="bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10 rounded-xl p-6 border border-blue-500/20 mb-8">
-          <h3 className="text-white font-semibold mb-2">Quick Threat Lookup</h3>
-          <p className="text-sm text-gray-400 mb-4">Lookup IP, domain, URL, hash or other indicators</p>
-          <div className="flex gap-3">
-            <input
-              type="text"
-              placeholder="Enter IP, domain, URL, hash, or indicator..."
-              className="flex-1 px-4 py-3 bg-[#0a0a0f] border border-[#1a1a2e] rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
-            />
-            <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-medium transition">
-              Lookup
-            </button>
-          </div>
-          <div className="flex flex-wrap gap-3 mt-4">
-            <span className="text-xs text-gray-500">Examples:</span>
-            <code className="text-xs text-gray-400 bg-[#0a0a0f] px-2 py-1 rounded">8.8.8.8</code>
-            <code className="text-xs text-gray-400 bg-[#0a0a0f] px-2 py-1 rounded">malware-domain.com</code>
-            <code className="text-xs text-gray-400 bg-[#0a0a0f] px-2 py-1 rounded">d41d8cd98f00b204e9800998ecf8427e</code>
-            <code className="text-xs text-gray-400 bg-[#0a0a0f] px-2 py-1 rounded">185.130.5.253</code>
-          </div>
-        </div>
-
-        {/* Recent Threats Table */}
-        <div className="bg-[#12121a] rounded-xl border border-[#1a1a2e] overflow-hidden">
-          <div className="px-6 py-4 border-b border-[#1a1a2e]">
-            <h3 className="text-white font-semibold">Recent Threats</h3>
-            <p className="text-xs text-gray-500 mt-1">Live threats detected in the last 24 hours</p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      
+      {/* Hero Section */}
+      <div className="relative overflow-hidden py-20">
+        <div className="container mx-auto px-4 text-center">
+          <div className="inline-flex items-center gap-2 bg-slate-800/50 rounded-full px-4 py-2 mb-6">
+            <Sparkles className="w-4 h-4 text-yellow-400" />
+            <span className="text-sm text-slate-300">Powered by AI & Real-time Threat Intel</span>
           </div>
           
-          {loading ? (
-            <div className="p-12 text-center text-gray-500">Loading threats...</div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-[#0f0f17] border-b border-[#1a1a2e]">
-                  <tr className="text-left text-xs text-gray-500">
-                    <th className="px-6 py-3 font-medium">INDICATOR</th>
-                    <th className="px-6 py-3 font-medium">TYPE</th>
-                    <th className="px-6 py-3 font-medium">RISK</th>
-                    <th className="px-6 py-3 font-medium">REPORTS</th>
-                    <th className="px-6 py-3 font-medium">LAST SEEN</th>
-                    <th className="px-6 py-3 font-medium">ACTIONS</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#1a1a2e]">
-                  {threats.map((threat) => (
-                    <tr key={threat.indicator} className="hover:bg-[#0f0f17] transition">
-                      <td className="px-6 py-3">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm">{getTypeIcon(threat.type)}</span>
-                          <span className="font-mono text-sm text-white">{threat.indicator}</span>
-                          <button
-                            onClick={() => copyToClipboard(threat.indicator)}
-                            className="hover:bg-[#1a1a2e] p-1 rounded transition"
-                          >
-                            {copied === threat.indicator ? (
-                              <Check className="w-3 h-3 text-green-500" />
-                            ) : (
-                              <Copy className="w-3 h-3 text-gray-500" />
-                            )}
-                          </button>
-                        </div>
-                        </td>
-                      <td className="px-6 py-3">
-                        <span className="text-xs text-gray-400">{threat.type.toUpperCase()}</span>
-                        </td>
-                      <td className="px-6 py-3">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getRiskBadge(threat.riskLevel, threat.riskScore)}`}>
-                          {threat.riskLevel.toUpperCase()} {Math.round(threat.riskScore)}%
-                        </span>
-                        </td>
-                      <td className="px-6 py-3 text-sm text-gray-400">{threat.reports.toLocaleString()}</td>
-                      <td className="px-6 py-3 text-sm text-gray-500">{new Date(threat.lastSeen).toLocaleString()}</td>
-                      <td className="px-6 py-3">
-                        <Link
-                          href={`/lookup/${encodeURIComponent(threat.indicator)}?type=${threat.type}`}
-                          className="text-blue-500 hover:text-blue-400 text-sm transition"
-                        >
-                          Details
-                        </Link>
-                        </td>
-                     </tr>
-                  ))}
-                </tbody>
-              </table>
+          <h1 className="text-6xl md:text-7xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+              ThreatVision AI
+            </span>
+          </h1>
+          
+          <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+            Enterprise-grade cyber threat intelligence platform. Analyze IPs, domains, and file hashes with advanced threat detection.
+          </p>
+          
+          <div className="flex justify-center gap-6 text-sm text-slate-500 mb-6">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+              <span>Live Threat Feed</span>
             </div>
-          )}
-        </div>
-
-        {/* Footer */}
-        <div className="mt-8 pt-6 border-t border-[#1a1a2e] text-center">
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <div className="flex items-center gap-4 text-xs text-gray-500">
-              <span>All systems operational</span>
-              <span>Uptime: 99.98%</span>
-            </div>
-            <div className="text-xs text-gray-600">
-              <p>ThreatVision AI protects your digital world</p>
-              <p className="mt-1">© 2026 ThreatVision AI. All rights reserved.</p>
+            <div className="flex items-center gap-2">
+              <Shield className="w-4 h-4" />
+              <span>Powered by VirusTotal</span>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Stats Section */}
+      <div className="container mx-auto px-4 -mt-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          <div className="bg-slate-800/50 rounded-xl p-6 text-center border border-slate-700">
+            <div className="text-3xl font-bold text-white">2.4M+</div>
+            <div className="text-sm text-slate-400">Threats Analyzed</div>
+          </div>
+          <div className="bg-slate-800/50 rounded-xl p-6 text-center border border-slate-700">
+            <div className="text-3xl font-bold text-white">1,247</div>
+            <div className="text-sm text-slate-400">Active Threats</div>
+          </div>
+          <div className="bg-slate-800/50 rounded-xl p-6 text-center border border-slate-700">
+            <div className="text-3xl font-bold text-white">5</div>
+            <div className="text-sm text-slate-400">Data Sources</div>
+          </div>
+          <div className="bg-slate-800/50 rounded-xl p-6 text-center border border-slate-700">
+            <div className="text-3xl font-bold text-white">&lt;200ms</div>
+            <div className="text-sm text-slate-400">Response Time</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Features Section */}
+      <div className="container mx-auto px-4 py-20">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+            Why Choose ThreatVision AI?
+          </h2>
+          <p className="text-slate-400 max-w-2xl mx-auto">
+            Comprehensive threat intelligence from multiple sources, all in one powerful platform
+          </p>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+            <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
+              <TrendingUp className="w-6 h-6 text-blue-400" />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-2">Real-time Analysis</h3>
+            <p className="text-slate-400">Get instant threat scores and detailed analysis from multiple security vendors with AI-powered insights.</p>
+          </div>
+          
+          <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+            <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
+              <Globe className="w-6 h-6 text-purple-400" />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-2">Global Coverage</h3>
+            <p className="text-slate-400">Access threat data from VirusTotal, AbuseIPDB, and 70+ antivirus engines worldwide.</p>
+          </div>
+          
+          <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+            <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
+              <Zap className="w-6 h-6 text-green-400" />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-2">Lightning Fast</h3>
+            <p className="text-slate-400">Cached responses deliver sub-200ms response times for instant threat assessment.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Live Threat Feed */}
+      <div className="container mx-auto px-4 py-12">
+        <div className="flex justify-between items-center mb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-white">Live Threat Feed</h2>
+            <p className="text-slate-400 text-sm">Recently detected threats from our intelligence network</p>
+          </div>
+          <Link href="/threats" className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-1">
+            View all <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+        
+        {loading ? (
+          <div className="bg-slate-800/30 rounded-xl p-8 text-center text-slate-400">Loading threats...</div>
+        ) : (
+          <div className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-slate-800 border-b border-slate-700">
+                  <tr className="text-left text-sm text-slate-400">
+                    <th className="px-6 py-3 font-medium">Indicator</th>
+                    <th className="px-6 py-3 font-medium">Type</th>
+                    <th className="px-6 py-3 font-medium">Risk Score</th>
+                    <th className="px-6 py-3 font-medium">Reports</th>
+                    <th className="px-6 py-3 font-medium">Last Seen</th>
+                    <th className="px-6 py-3 font-medium">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-700">
+                  {threats.map((threat) => (
+                    <tr key={threat.indicator} className="hover:bg-slate-800/30">
+                      <td className="px-6 py-3 font-mono text-sm text-white">{threat.indicator}</td>
+                      <td className="px-6 py-3">
+                        <span className="text-xs text-slate-400">{threat.type}</span>
+                      </td>
+                      <td className="px-6 py-3">
+                        <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${getRiskColor(threat.riskLevel)}`}>
+                          {Math.round(threat.riskScore)}% - {threat.riskLevel.toUpperCase()}
+                        </span>
+                      </td>
+                      <td className="px-6 py-3 text-sm text-slate-400">{threat.reports}</td>
+                      <td className="px-6 py-3 text-sm text-slate-500">{new Date(threat.lastSeen).toLocaleString()}</td>
+                      <td className="px-6 py-3">
+                        <Link href={`/lookup/${encodeURIComponent(threat.indicator)}?type=${threat.type}`} className="text-blue-400 hover:text-blue-300 text-sm">
+                          Details
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* CTA Section */}
+      <div className="container mx-auto px-4 py-16">
+        <div className="bg-slate-800/30 rounded-2xl p-8 text-center border border-slate-700">
+          <h2 className="text-2xl font-bold text-white mb-3">Start Analyzing Threats Now</h2>
+          <p className="text-slate-400 mb-4">Enter an IP, domain, or file hash above to get instant threat intelligence</p>
+          <div className="flex flex-wrap justify-center gap-3 text-sm text-slate-500">
+            <span className="px-3 py-1 bg-slate-800 rounded-full">IP: 8.8.8.8</span>
+            <span className="px-3 py-1 bg-slate-800 rounded-full">Domain: example.com</span>
+            <span className="px-3 py-1 bg-slate-800 rounded-full">Hash: MD5/SHA256</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="border-t border-slate-800 py-6 mt-8">
+        <div className="container mx-auto px-4 text-center text-sm text-slate-500">
+          <p>© 2026 ThreatVision AI. All rights reserved.</p>
+          <div className="flex justify-center gap-4 mt-2">
+            <a href="https://github.com/mnadeem2074/threatvision-ai" target="_blank" className="hover:text-blue-400">GitHub</a>
+            <span>|</span>
+            <span>Powered by VirusTotal</span>
+            <span>|</span>
+            <span>AbuseIPDB</span>
+            <span>|</span>
+            <span>IPinfo</span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
