@@ -1,4 +1,3 @@
-cat > app/page.tsx << 'EOF'
 'use client';
 
 import { Shield, Activity, Globe, Zap, TrendingUp, AlertTriangle, ArrowRight, Database } from 'lucide-react';
@@ -158,4 +157,3 @@ export default function Home() {
     </div>
   );
 }
-EOF
