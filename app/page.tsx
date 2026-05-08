@@ -92,18 +92,32 @@ export default function Home() {
         </div>
         
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {features.map((feature, index) => (
-            <div 
-              key={index} 
-              className="group bg-slate-800/40 backdrop-blur-sm rounded-xl p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-xl hover:shadow-blue-500/10"
-            >
-              <div className={`w-12 h-12 ${feature.bgColor} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                <feature.icon className={`w-6 h-6 ${feature.iconColor}`} />
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-white">{feature.title}</h3>
-              <p className="text-slate-400 leading-relaxed">{feature.description}</p>
+          {/* Card 1 */}
+          <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700 hover:border-blue-500 transition-all duration-300">
+            <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4">
+              <TrendingUp className="w-6 h-6 text-blue-400" />
             </div>
-          ))}
+            <h3 className="text-xl font-semibold mb-2 text-white">Real-time Analysis</h3>
+            <p className="text-slate-400">Get instant threat scores and detailed analysis from multiple security vendors</p>
+          </div>
+          
+          {/* Card 2 */}
+          <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700 hover:border-purple-500 transition-all duration-300">
+            <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4">
+              <Globe className="w-6 h-6 text-purple-400" />
+            </div>
+            <h3 className="text-xl font-semibold mb-2 text-white">Global Coverage</h3>
+            <p className="text-slate-400">Access threat data from VirusTotal, AbuseIPDB, and multiple intelligence feeds</p>
+          </div>
+          
+          {/* Card 3 */}
+          <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700 hover:border-green-500 transition-all duration-300">
+            <div className="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-4">
+              <Zap className="w-6 h-6 text-green-400" />
+            </div>
+            <h3 className="text-xl font-semibold mb-2 text-white">Fast & Reliable</h3>
+            <p className="text-slate-400">Cached responses and optimized API calls for sub-200ms response times</p>
+          </div>
         </div>
       </div>
 
