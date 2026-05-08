@@ -55,3 +55,9 @@
 ## 💡 Real-World Use Cases
 
 ### Example 1: **Email Security**
+
+### Example 2: Website Safety Check**
+
+### Example 3: File Verification**
+
+### Example 4: Firewall Alert Investigation**
