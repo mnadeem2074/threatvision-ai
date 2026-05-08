@@ -1,6 +1,6 @@
 'use client';
 
-import { Shield, Github, Twitter, Menu, X } from 'lucide-react';
+import { Shield, Github, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
 
@@ -8,7 +8,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-card">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-700">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -18,7 +18,7 @@ export default function Header() {
               <Shield className="w-8 h-8 text-blue-400 relative z-10" />
             </div>
             <div>
-              <h1 className="text-xl font-bold gradient-text">ThreatVision AI</h1>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">ThreatVision AI</h1>
               <p className="text-xs text-slate-400">Cyber Threat Intelligence</p>
             </div>
           </Link>
@@ -27,12 +27,9 @@ export default function Header() {
           <div className="hidden md:flex items-center gap-8">
             <a href="#features" className="text-slate-300 hover:text-white transition">Features</a>
             <a href="#threat-feed" className="text-slate-300 hover:text-white transition">Threat Feed</a>
-            <a href="https://github.com/mnadeem2074/threatvision-ai" target="_blank" className="text-slate-300 hover:text-white transition flex items-center gap-2">
+            <a href="https://github.com/mnadeem2074/threatvision-ai" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-white transition flex items-center gap-2">
               <Github className="w-4 h-4" />
               GitHub
-            </a>
-            <a href="https://twitter.com" target="_blank" className="text-slate-300 hover:text-white transition">
-              <Twitter className="w-4 h-4" />
             </a>
           </div>
 
@@ -48,7 +45,7 @@ export default function Header() {
             <div className="flex flex-col gap-4">
               <a href="#features" className="text-slate-300 hover:text-white transition">Features</a>
               <a href="#threat-feed" className="text-slate-300 hover:text-white transition">Threat Feed</a>
-              <a href="https://github.com/mnadeem2074/threatvision-ai" target="_blank" className="text-slate-300 hover:text-white transition flex items-center gap-2">
+              <a href="https://github.com/mnadeem2074/threatvision-ai" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-white transition flex items-center gap-2">
                 <Github className="w-4 h-4" />
                 GitHub
               </a>
