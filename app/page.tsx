@@ -1,6 +1,7 @@
+cat > app/page.tsx << 'EOF'
 'use client';
 
-import { Shield, Activity, Globe, Zap, TrendingUp, AlertTriangle, CheckCircle, ArrowRight, Cpu, Clock, Server, Eye, Lock, Database } from 'lucide-react';
+import { Shield, Activity, Globe, Zap, TrendingUp, AlertTriangle, ArrowRight, Database } from 'lucide-react';
 import SearchBar from '@/components/SearchBar';
 import ThreatTable from '@/components/ThreatTable';
 import Link from 'next/link';
@@ -11,7 +12,6 @@ export default function Home() {
       icon: TrendingUp,
       title: 'Real-time Analysis',
       description: 'Get instant threat scores and detailed analysis from multiple security vendors',
-      color: 'blue',
       bgColor: 'bg-blue-500/10',
       iconColor: 'text-blue-400'
     },
@@ -19,7 +19,6 @@ export default function Home() {
       icon: Globe,
       title: 'Global Coverage',
       description: 'Access threat data from VirusTotal, AbuseIPDB, and multiple intelligence feeds',
-      color: 'purple',
       bgColor: 'bg-purple-500/10',
       iconColor: 'text-purple-400'
     },
@@ -27,7 +26,6 @@ export default function Home() {
       icon: Zap,
       title: 'Fast & Reliable',
       description: 'Cached responses and optimized API calls for sub-200ms response times',
-      color: 'green',
       bgColor: 'bg-green-500/10',
       iconColor: 'text-green-400'
     }
@@ -98,7 +96,7 @@ export default function Home() {
           {features.map((feature, index) => (
             <div 
               key={index} 
-              className="group relative bg-slate-800/40 backdrop-blur-sm rounded-xl p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-xl hover:shadow-blue-500/10"
+              className="group bg-slate-800/40 backdrop-blur-sm rounded-xl p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-xl hover:shadow-blue-500/10"
             >
               <div className={`w-12 h-12 ${feature.bgColor} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
                 <feature.icon className={`w-6 h-6 ${feature.iconColor}`} />
@@ -160,3 +158,4 @@ export default function Home() {
     </div>
   );
 }
+EOF
