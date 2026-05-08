@@ -1,27 +1,57 @@
-# ThreatVision AI - Cyber Threat Intelligence Platform
+# 🛡️ ThreatVision AI - Cyber Threat Intelligence Platform
 
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://threatvision-ai.vercel.app)
+[![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
+[![Tailwind](https://img.shields.io/badge/Tailwind-CSS-38B2AC)](https://tailwindcss.com/)
 
 ## 🌐 Live Demo
-**https://threatvision-ai.vercel.app**
+**👉 https://threatvision-ai.vercel.app**
 
-## 🚀 Features
-- Real-time IP, Domain, and Hash lookup
-- Risk scoring (0-100) with visual gauges
-- Live threat feed with real-time updates
-- Powered by VirusTotal, AbuseIPDB, and IPinfo APIs
+---
 
-## 🛠️ Tech Stack
-- Next.js 14 + TypeScript
-- Tailwind CSS
-- Vercel Deployment
+## 📋 What Can You Do With ThreatVision AI?
 
-## 📊 API Sources
-| Source | Purpose |
-|--------|---------|
-| VirusTotal | Malware detection |
-| AbuseIPDB | IP reputation |
-| IPinfo | Geolocation |
+### 🔍 1. **Real-time Threat Lookups**
+- **Check IP addresses** - See if an IP is malicious, where it's located, and how many abuse reports it has
+- **Scan domains** - Verify if a website is safe before visiting
+- **Analyze file hashes** - Check MD5, SHA1, or SHA256 hashes for malware detection
 
-## 📄 License
-MIT License
+### 📊 2. **Get Instant Risk Scores**
+- Every search returns a **0-100 risk score**
+- Visual color-coded gauge (Green/Yellow/Orange/Red)
+- Understand threat levels at a glance
+
+### 📈 3. **Monitor Live Threat Feed**
+- See recently detected threats in real-time
+- Track active malicious IPs and domains
+- Stay updated on global cyber threats
+
+### 🗺️ 4. **Geolocation Intelligence**
+- See where malicious IPs are located
+- Identify country and city of origin
+- Track attack sources geographically
+
+### 💾 5. **Export & Share Results**
+- Copy threat indicators with one click
+- Share analysis results with your team
+- Use in security reports and documentation
+
+---
+
+## 🎯 Who Is This For?
+
+| User Type | How They Can Use ThreatVision AI |
+|-----------|----------------------------------|
+| **Security Analysts** | Quickly investigate suspicious IPs/domains without multiple tools |
+| **Developers** | Check if dependencies or external services are malicious |
+| **System Administrators** | Verify firewall alerts and block suspicious addresses |
+| **Students** | Learn about threat intelligence and cybersecurity |
+| **Small Businesses** | Free threat intelligence without expensive commercial tools |
+| **Home Users** | Check if an email sender or website is safe |
+
+---
+
+## 💡 Real-World Use Cases
+
+### Example 1: **Email Security**
