@@ -6,7 +6,8 @@
 [![Tailwind](https://img.shields.io/badge/Tailwind-CSS-38B2AC)](https://tailwindcss.com/)
 
 ## 🌐 Live Demo
-**👉 https://threatvision-eqjeuolbl-mnadeem2074s-projects.vercel.app**
+
+**👉 https://threatvision-ai.vercel.app**
 
 ---
 
