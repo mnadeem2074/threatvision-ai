@@ -6,7 +6,7 @@
 [![Tailwind](https://img.shields.io/badge/Tailwind-CSS-38B2AC)](https://tailwindcss.com/)
 
 ## 🌐 Live Demo
-**👉 https://threatvision-ai.vercel.app**
+**👉 https://threatvision-eqjeuolbl-mnadeem2074s-projects.vercel.app**
 
 ---
 
@@ -64,3 +64,40 @@
 
 ### Example 5: Third-Party Risk Assessment**
 # Auto-deploy test
+
+
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| Next.js 14 + TypeScript | Frontend & Backend |
+| Tailwind CSS | Styling |
+| Recharts | Data visualization |
+| Vercel | Deployment |
+| VirusTotal API | Malware detection |
+| AbuseIPDB API | IP reputation |
+| IPinfo API | Geolocation |
+
+---
+
+## 📊 API Sources
+
+| Source | Purpose | Free Tier |
+|--------|---------|-----------|
+| VirusTotal | Malware detection | 500 requests/day |
+| AbuseIPDB | IP reputation | 1000 requests/day |
+| IPinfo | Geolocation | 50,000 requests/month |
+
+---
+
+
+## 🏗️ Run Locally
+
+```bash
+git clone https://github.com/mnadeem2074/threatvision-ai.git
+cd threatvision-ai
+npm install
+npm run dev
